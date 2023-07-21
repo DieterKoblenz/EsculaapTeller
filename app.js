@@ -31,10 +31,7 @@ const db = new sqlite3.Database('scores.db', (err) => {
 });
 
 const client = new Client({
-    authStrategy: new LocalAuth(),
-	puppeteer: {
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    }
+    authStrategy: new LocalAuth()
 });
  
 	
