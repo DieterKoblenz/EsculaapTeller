@@ -1,3 +1,9 @@
+// Todo:
+// Publieke opdrachten: #punten !top5
+// Private opdrachten: !nieuw !setnickname !acties
+// 
+//
+
 const { Client, LocalAuth, MessageMedia  } = require('whatsapp-web.js');
 const sqlite3 = require('sqlite3').verbose();
 const qrcode = require('qrcode-terminal');
@@ -56,8 +62,7 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => {
   const groupChatId = msg.from.endsWith('@g.us') ? msg.from : null;
-  // Alleen antwoorden in eCI groupchat
-  if (groupChatId === eCIID) {
+  if (groupChatId === eCIID) { // Alleen antwoorden in eCI groupchat
     if (msg.body == '!top5') {
       const getScoresWithNicknames = await getTopScoresWithNicknames();
       if (getScoresWithNicknames.length > 0) {
@@ -107,7 +112,7 @@ client.on('message', async (msg) => {
         }
       }
     }
-  } else {
+  } else { // Mag in elke chat. Misschien nog maken, enkel in privé chat.
 	  if (msg.body.startsWith('!help')) {
 		  msg.reply(`Ik ben Esculaap, ik zorg er voor dat alle punten worden bijgehouden..`);
 		  const media = MessageMedia.fromFilePath('./snake.gif');
