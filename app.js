@@ -4,6 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const qrcode = require('qrcode-terminal');
 
 const eCIID = '120363162802059783@g.us'; // Replace with your own eCIID (Deze code is om te testen)
+const authorizedUserPhoneNumber = '31625210135@c.us';
 
 console.error('Starting the Esculaap app.');
 
@@ -64,6 +65,7 @@ client.on('ready', () => {
 client.on('message', async (msg) => {
   const Userid = msg.author;
   const ChatId = msg.from.endsWith('@g.us') ? msg.from : null;
+  const isAuthorizedUser = msg.from === authorizedUserPhoneNumber;
   console.log(`Message received on channel ${ChatId} and from ${Userid}`);
   console.log(msg);
   // Alleen antwoorden in eCI groupchat
@@ -104,10 +106,14 @@ client.on('message', async (msg) => {
       }
     }
 
-	 else if (msg.body == '!setup') {
+	 else if (msg.body == '!setup' && isAuthorizedUser)) {
       // Run the setup function when receiving !setup command in the specific group chat
       setupGroupUsers();
       msg.reply('Setup completed! All users in the group are added to the database.');
+    }
+	 else if (msg.body == '!listusers' && isAuthorizedUser) {
+      // List all users in the database with their nickname and phone number
+      listUsers(msg);
     }
       else if (msg.body.startsWith('#punten')) {
       const user = Userid; // Extracting the user's phone number
@@ -258,6 +264,17 @@ function logPoints(user, scoreChange, chick) {
       }
     }
   );
+}
+
+function listUsers(msg) {
+  db.all('SELECT user, nickname FROM scores', (err, rows) => {
+    if (err) {
+      console.error('Error retrieving users:', err.message);
+    } else {
+      const userList = rows.map(({ user, nickname }) => `User: ${user}, Nickname: ${nickname}`).join('\n');
+      msg.reply(`List of users:\n${userList}`);
+    }
+  });
 }
 
 function getPointsLogForUser(user) {
