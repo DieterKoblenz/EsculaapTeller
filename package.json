@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "esculaap",
+  "version": "0.0.1-001",
+  "author": {
+    "name": "Jeroen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DieterKoblenz/EsculaapTeller.git"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "latest",
+    "sqlite3": "latest",
+    "qrcode-terminal": "latest"
+  }
+}
