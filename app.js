@@ -103,6 +103,12 @@ client.on('message', async (msg) => {
         msg.reply('Please provide a nickname after the command. For example, `!nieuw MyNickname`.');
       }
     }
+
+	 else if (msg.body == '!setup') {
+      // Run the setup function when receiving !setup command in the specific group chat
+      setupGroupUsers();
+      msg.reply('Setup completed! All users in the group are added to the database.');
+    }
       else if (msg.body.startsWith('#punten')) {
       const user = Userid; // Extracting the user's phone number
       const currentScore = await getScore(user);
@@ -180,6 +186,19 @@ function getScore(user) {
       }
     });
   });
+}
+
+async function setupGroupUsers() {
+  try {
+    const groupMembers = await client.getGroupMembers(specificGroupChatId);
+    for (const member of groupMembers) {
+      const user = member.id._serialized.replace('@c.us', ''); // Extracting the user's phone number
+      const nickname = member.name || member.pushname;
+      insertNewUser(user, nickname);
+    }
+  } catch (error) {
+    console.error('Error retrieving group members:', error.message);
+  }
 }
 
 function insertNewUser(user, nickname) {
