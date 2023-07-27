@@ -6,6 +6,11 @@ const qrcode = require('qrcode-terminal');
 const eCIID = '120363162802059783@g.us'; // Replace with your own eCIID (Deze code is om te testen)
 const authorizedUserPhoneNumber = '31625210135@c.us';
 
+//const groupID = process.env.GROUPID;
+const groupID = '120363162802059783@g.us'; // Replace with your own eCIID (Deze code is om te testen)
+//const adminID = process.env.ADMINID;
+const adminID = '31625210135@c.us';
+
 console.error('Starting the Esculaap app.');
 
 // Create or open the SQLite database
