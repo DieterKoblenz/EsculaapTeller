@@ -106,7 +106,7 @@ client.on('message', async (msg) => {
       }
     }
 
-	 else if (msg.body == '!setup' && isAuthorizedUser)) {
+	 else if (msg.body == '!setup' && isAuthorizedUser) {
       // Run the setup function when receiving !setup command in the specific group chat
       setupGroupUsers();
       msg.reply('Setup completed! All users in the group are added to the database.');
